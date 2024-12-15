@@ -12,18 +12,11 @@ function getListDistances(list1, list2) {
 }
 
 function getSimilarityScore(list1, list2) {
-  var map = new Map();
   var score = 0;
-
-  for(let i = 0; i < list1.length; i++) {
-    if(map.has(list1[i])) {
-      map.set(list1[i], map.get(list1[i]) + list2.reduce((acc, cur) => acc + (cur == list1[i] ? cur : 0), 0));
-    } else {
-      map.set(list1[i], list2.reduce((acc, cur) => acc + (cur == list1[i] ? cur : 0), 0));
-    }
-  }
-
-  map.forEach(value => score += value);
+  list1.map(element => {
+    let count = list2.reduce((acc, cur) => acc + (cur == element ? cur : 0), 0)
+    score += count;
+  });
   return score;
 }
 
