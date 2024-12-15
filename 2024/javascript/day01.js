@@ -11,6 +11,22 @@ function getListDistances(list1, list2) {
   return total;
 }
 
+function getSimilarityScore(list1, list2) {
+  var map = new Map();
+  var score = 0;
+
+  for(let i = 0; i < list1.length; i++) {
+    if(map.has(list1[i])) {
+      map.set(list1[i], map.get(list1[i]) + list2.reduce((acc, cur) => acc + (cur == list1[i] ? cur : 0), 0));
+    } else {
+      map.set(list1[i], list2.reduce((acc, cur) => acc + (cur == list1[i] ? cur : 0), 0));
+    }
+  }
+
+  map.forEach(value => score += value);
+  return score;
+}
+
 async function getLists(filePath) {
   try {
     const data = await fs.readFile(filePath, { encoding: 'utf-8' });
@@ -35,6 +51,8 @@ async function getLists(filePath) {
 }
 
 getLists(`../inputs/day1-input.txt`)
-  .then(({ left, right }) => console.log(getListDistances(left, right)))
+  .then(({ left, right }) => {
+    console.log(getListDistances(left, right))
+    console.log(getSimilarityScore(left, right))
+  })
   .catch(err => console.error(err));
-
