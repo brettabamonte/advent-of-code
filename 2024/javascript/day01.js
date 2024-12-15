@@ -34,7 +34,7 @@ async function getLists(filePath) {
   }
 }
 
-getLists(`../inputs/day2-input.txt`)
-  .then(data => console.log(getListDistances(data.left, data.right)))
+getLists(`../inputs/day1-input.txt`)
+  .then(({ left, right }) => console.log(getListDistances(left, right)))
   .catch(err => console.error(err));
 
